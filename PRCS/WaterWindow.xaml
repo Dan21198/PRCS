@@ -1,0 +1,34 @@
+﻿<Window x:Class="PRCS.WaterWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PRCS"
+        mc:Ignorable="d"
+        Title="GasWindow" MinHeight="625" MinWidth="950" MaxHeight="625" MaxWidth="950" Width="950" Height="625">
+    <Grid Background="#FF1B1A1A" Margin="0,0,-100,-6">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Button Name="AdditionButton" Content="Add" HorizontalAlignment="Left" Margin="222,428,0,94" Height="64" Width="164" Click="AdditionButton_Click"/>
+        <TextBox Name="ValueTextBox"  HorizontalAlignment="Left" Height="43" Margin="24,71,0,0" TextWrapping="Wrap" TextAlignment="Center" Text="Hodnota" VerticalAlignment="Top" Width="164" TextChanged="ValueTextBox_TextChanged"/>
+        <TextBox Name="CommentTextBox"  HorizontalAlignment="Left" Height="258" Margin="24,146,0,0" TextWrapping="Wrap" TextAlignment="Center" Text="Komentář" VerticalAlignment="Top" Width="164"/>
+        <ListView x:Name="listView" Margin="222,71,143,177" SelectionChanged="listView_SelectionChanged" MaxHeight="338" MaxWidth="700" >
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn DisplayMemberBinding="{Binding Time}" Header="Date" Width="90"></GridViewColumn>
+                    <GridViewColumn DisplayMemberBinding="{Binding Value}" Header="kWh" Width="90"></GridViewColumn>
+                    <GridViewColumn DisplayMemberBinding="{Binding Comment}" Header="Comment" Width="90"></GridViewColumn>
+                    <GridViewColumn DisplayMemberBinding="{Binding Cost}" Header="Cost" Width="90"></GridViewColumn>
+                </GridView>
+            </ListView.View>
+
+        </ListView>
+        <Button Name="DeleteButton" Content="Delete" HorizontalAlignment="Left" Margin="550,430,0,96" Height="64" Width="164" Click="DeleteButton_Click"/>
+        <Button Name="UpdateButton" Content="Update" HorizontalAlignment="Left" Margin="386,428,0,94" Height="64" Width="164" Click="UpdatenButton_Click"/>
+        <Label Content="m3" Foreground="White" HorizontalAlignment="Left" Margin="188,75,0,0" VerticalAlignment="Top" Height="39" Width="34"/>
+        <DatePicker Name="DataPicker" HorizontalAlignment="Left" Margin="24,119,0,0" VerticalAlignment="Top" Height="22" Width="164"/>
+        <Button Content="Graph" HorizontalAlignment="Left" Margin="719,428,0,94" Height="64" Width="164" Click="Button_Click"/>
+
+    </Grid>
+</Window>

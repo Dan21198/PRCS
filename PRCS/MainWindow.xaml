@@ -1,0 +1,14 @@
+﻿<Window x:Class="PRCS.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PRCS"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="486" Width="976">
+    <Grid Background="#FF1B1A1A">
+        <Button Name="ElectricityButton" Content="Electricity" HorizontalAlignment="Center" Height="63" Width="164" Click="ElectricityButton_Click" Margin="0,115,0,256"/>
+        <Button Name="WaterButton" Content="Water" HorizontalAlignment="Center"  Height="63" Width="164" Margin="0,183,0,188" Click="WaterButton_Click"/>
+        <Button Name="GasButton" Content="Gas" HorizontalAlignment="Center" Height="63" Width="164" Margin="0,251,0,120" Click="GasButton_Click"/>
+    </Grid>
+</Window>
