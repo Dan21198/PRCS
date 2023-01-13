@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -27,10 +29,21 @@ namespace PRCS
         public WaterWindow()
         {
             InitializeComponent();
-            items = new ObservableCollection<Electricity>();
+            if (File.Exists("W.json") && new FileInfo("W.json").Length != 0)
+            {
+                string fileName = "W.json";
+                string jsonString = File.ReadAllText(fileName);
+                items = JsonSerializer.Deserialize<ObservableCollection<Electricity>>(jsonString)!;
+                listView.ItemsSource = items;
+                listView.Items.Refresh();
+            }
+            else
+            {
+                items = new ObservableCollection<Electricity>();
+            }
         }
 
-        private void AdditionButton_Click(object sender, RoutedEventArgs e)
+        private async void AdditionButton_Click(object sender, RoutedEventArgs e)
         {
 
             try
@@ -46,6 +59,11 @@ namespace PRCS
 
                 items.Add(electricity);
 
+                string fileName = "W.json";
+                using FileStream createStream = File.Create(fileName);
+                await JsonSerializer.SerializeAsync(createStream, items);
+                await createStream.DisposeAsync();
+
                 listView.ItemsSource = items;
                 listView.Items.Refresh();
             }
@@ -56,7 +74,7 @@ namespace PRCS
 
 
         }
-        private void DeleteButton_Click(object sender, RoutedEventArgs e)
+        private async void DeleteButton_Click(object sender, RoutedEventArgs e)
         {
             try
             {
@@ -64,6 +82,11 @@ namespace PRCS
                 if (delete != null)
                 {
                     ((ObservableCollection<Electricity>)listView.ItemsSource).Remove(delete);
+
+                    string fileName = "W.json";
+                    using FileStream createStream = File.Create(fileName);
+                    await JsonSerializer.SerializeAsync(createStream, items);
+                    await createStream.DisposeAsync();
                 }
                 listView.Items.Refresh();
             }
@@ -72,7 +95,7 @@ namespace PRCS
             }
         }
 
-        private void UpdatenButton_Click(object sender, RoutedEventArgs e)
+        private async void UpdatenButton_Click(object sender, RoutedEventArgs e)
         {
             try
             {
@@ -86,6 +109,12 @@ namespace PRCS
                     update.Time = parsedDate;
                     update.Comment = CommentTextBox.Text;
                     update.Cost = update.Value * costOfelectricity;
+
+                    File.Delete("W.json");
+                    string fileName = "W.json";
+                    using FileStream createStream = File.Create(fileName);
+                    await JsonSerializer.SerializeAsync(createStream, items);
+                    await createStream.DisposeAsync();
                 }
                 listView.Items.Refresh();
 
@@ -113,8 +142,8 @@ namespace PRCS
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            ElGraphWindow elGraphWindow = new ElGraphWindow();
-            elGraphWindow.Show();
+            WaterGraphWindow waterGraph = new WaterGraphWindow();
+            waterGraph.Show();
         }
     }
 }
